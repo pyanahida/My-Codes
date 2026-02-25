@@ -1,0 +1,90 @@
+<!--
+Restore the game on Steam - nothing.
+
+Author's own reference materials
+    https://b23.tv/yJjnG7J
+
+Reference materials provided to players
+    https://m.qhhlv.com/news/203313840.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nothing</title>
+<style>
+/*body*/
+body {
+    background-color: #333;
+}
+
+/*div*/
+div.hidden {
+    display: none;  
+}
+
+/*p*/
+p {
+    color: #888;
+    white-space: pre-wrap;
+}
+
+/*span*/
+span.text-grey {
+    color: #888;
+}
+span.text-white {
+    color: #FFF;
+}
+span.text-black {
+    color: #000;
+}
+</style>
+</head>
+<body>
+<div id="firstDiv">
+    <p>You have been doing <span class="text-white">Nothing</span> for</p>
+    <p><span class="text-grey" id="counting">0</span> seconds</p>
+</div>
+<div class="hidden" id="secondDiv">
+    <p>You did <span class="text-black">Something</span>, you lost</p>
+    <p>You did <span class="text-white">Nothing</span> for <span class="text-grey" id="endtime"></span> seconds</p>
+</div>
+<script>
+let didSomething = false;
+let seconds = 0;
+let timerId;
+
+// DOM元素
+const firstDiv = document.getElementById("firstDiv");
+const secondDiv = document.getElementById("secondDiv");
+const counting = document.getElementById("counting");
+const endtime = document.getElementById("endtime");
+
+// 监听所有用户交互事件
+['keydown', 'click', 'mousemove', 'touchstart', 'touchmove'].forEach(eventType => {
+    document.addEventListener(eventType, end);
+});
+
+// 游戏结束
+function end() {
+    if (!didSomething) {
+        didSomething = true;
+        clearInterval(timerId);
+        firstDiv.classList.add('hidden');
+        secondDiv.classList.remove('hidden');
+        endtime.textContent = seconds;
+    }
+}
+
+// 倒计时
+timerId = setInterval(function() {
+    if (!didSomething) {
+        seconds++;
+        counting.textContent = seconds;
+    }
+}, 1000);
+</script>
+</body>
+</html>
